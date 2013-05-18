@@ -3,7 +3,7 @@
 // These are estimated RGB values for the beads, your milage may vary.
 // Depending on the brand, you can adjust these values accordingly
 
-$colors = array(
+return array(
 	array('name'=>'Green'          ,'red'=>85, 'green'=>187,'blue'=>81),   /* Green         207-10 */
 	array('name'=>'Purple'         ,'red'=>83, 'green'=>42, 'blue'=>92),   /* Purple        207-07 */
 	array('name'=>'Light Brown'    ,'red'=>141,'green'=>76, 'blue'=>48),   /* Light Brown   207-21 */
