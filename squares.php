@@ -20,12 +20,18 @@ xmlns="http://www.w3.org/2000/svg">';
 
 
 // Path to your JPG image file
-$im = imagecreatefromjpeg("example.jpg");
+$im = imagecreatefromjpeg("iceland.jpg");
 $x = imagesx($im);
 $y = imagesy($im);
 
 $stepper = 5; // This is the size of the output squares
 $color_counter = array();
+
+
+$handle = fopen('hama.json', "rb");
+$colors = fread($handle, filesize('hama.json'));
+fclose($handle);
+$colors = json_decode($colors,true);
 
 // Loop through each pixel and make it an SVG square
 for($i=0;$i<$x;$i++){
@@ -34,7 +40,7 @@ for($i=0;$i<$x;$i++){
 	$k = imagecolorsforindex($im, $k);
 	$rad = $stepper;
 
-	$k = closestColor($k);
+	$k = closestColor($k,$colors);
 
 	$color_counter[$k['name']]++;
 
@@ -55,15 +61,14 @@ echo '-->';
 
 echo '</svg>';
 
-function closestColor($rgb){
+function closestColor($rgb,$colors){
 	$r = $rgb['red'];
     $g = $rgb['green'];
     $b = $rgb['blue'];
     
 	$smallest = 765;
+	
 
-	// Load the color array
-	include('hama_colors.php');
 	foreach($colors as $c){
 		$tSmall = colorDistance($r,$g,$b,$c['red'],$c['green'],$c['blue']);
 
@@ -82,10 +87,11 @@ function closestColor($rgb){
 	return $new_color;
 }
 function colorDistance($r,$g,$b,$target_r,$target_g,$target_b){
-	$nR = abs($r-$target_r);
-	$nG = abs($g-$target_g);
-	$nB = abs($b-$target_b);
-	
-	return $nR+$nG+$nB;
+	$d = sqrt(
+		pow($r-$target_r,2)+
+		pow($g-$target_g,2)+
+		pow($b-$target_b,2)
+		);
+	return $d;
 }
 ?>
