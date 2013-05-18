@@ -20,7 +20,7 @@ xmlns="http://www.w3.org/2000/svg">';
 
 
 // Path to your JPG image file
-$im = imagecreatefromjpeg("iceland.jpg");
+$im = imagecreatefromjpeg("example.jpg");
 $x = imagesx($im);
 $y = imagesy($im);
 
